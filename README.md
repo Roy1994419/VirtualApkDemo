@@ -19,3 +19,4 @@ demo运行命令
 
   注意需要添加权限   
  
+请参考 https://github.com/didi/VirtualAPK/wiki
