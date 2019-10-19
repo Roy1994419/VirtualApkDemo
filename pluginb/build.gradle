@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        applicationId "org.zdnuist.plugin.b"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+    signingConfigs {
+        release {
+            storeFile file("../keystore.jks")
+            storePassword "zdnuist"
+            keyAlias "zd"
+            keyPassword "zdnuist"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:28.+'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+
+   // implementation 'com.didi.virtualapk:core:0.9.0'
+}
+
+apply plugin: 'com.didi.virtualapk.plugin'
+
+virtualApk {
+    packageId = 0x5f // the package id of Resources.
+    targetHost = '../app' // the path of application module in host project.
+    applyHostMapping = true //optional, default value: true.
+}
